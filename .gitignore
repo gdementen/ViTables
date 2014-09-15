@@ -11,5 +11,6 @@ syntax: glob
 doc/html
 doc/index.rst
 run_vitables.py
-
+ViTables.egg-info
 build
+dist
