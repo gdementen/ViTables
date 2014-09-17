@@ -29,7 +29,6 @@ dialog selector tree.
 
 __docformat__ = 'restructuredtext'
 
-import os.path
 import ConfigParser
 import datetime
 
@@ -37,7 +36,7 @@ from PyQt4 import QtGui
 from PyQt4 import QtCore
 from PyQt4.uic import loadUiType
 
-import vitables.utils
+from vitables.vtsite import resource_path
 
 
 translate = QtGui.QApplication.translate
@@ -47,8 +46,7 @@ translate = QtGui.QApplication.translate
 # interfaces created by QtDesigner. See the PyQt4 Reference Guide for more
 # info.
 Ui_TimeFormatterPage = \
-    loadUiType(os.path.join(os.path.dirname(__file__), 
-    'timeformatter_page.ui'))[0]
+    loadUiType(resource_path(__file__, 'timeformatter_page.ui'))[0]
 
 
 class AboutPage(QtGui.QWidget, Ui_TimeFormatterPage):
@@ -93,8 +91,7 @@ class AboutPage(QtGui.QWidget, Ui_TimeFormatterPage):
         config = ConfigParser.RawConfigParser()
         def_tformat = '%c' 
         try:
-            config.read(\
-                os.path.join(os.path.dirname(__file__), u'time_format.ini'))
+            config.read(resource_path(__file__, u'time_format.ini'))
             self.tformat = config.get('Timeseries', 'strftime')
         except (IOError, ConfigParser.Error):
             self.tformat = def_tformat
@@ -140,7 +137,7 @@ class AboutPage(QtGui.QWidget, Ui_TimeFormatterPage):
         """
 
         config = ConfigParser.RawConfigParser()
-        filename = os.path.join(os.path.dirname(__file__), u'time_format.ini')
+        filename = resource_path(__file__, u'time_format.ini')
         config.read(filename)
         config.set(\
             'Timeseries', 'strftime', self.tformat_editor.text())

@@ -52,9 +52,9 @@ except ImportError:
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
+from vitables.vtsite import resource_path
 import vitables.utils
 import vitables.plugin_utils
-from vitables.vtsite import PLUGINSDIR
 from vitables.plugins.timeseries.aboutpage import AboutPage
 
 translate = QtGui.QApplication.translate
@@ -165,8 +165,7 @@ def datetimeFormat():
     config = ConfigParser.RawConfigParser()
     def_dtformat = '%c' 
     try:
-        config.read(\
-            os.path.join(os.path.dirname(__file__), u'time_format.ini'))
+        config.read(resource_path(__file__, u'time_format.ini'))
         datetime_format = config.get('Timeseries', 'strftime')
     except (IOError, ConfigParser.Error):
         datetime_format = def_dtformat

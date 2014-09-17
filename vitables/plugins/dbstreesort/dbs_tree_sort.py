@@ -41,6 +41,7 @@ from PyQt4 import QtGui
 from PyQt4 import QtCore
 
 import vitables
+from vitables.vtsite import resource_path
 from vitables.plugins.dbstreesort.aboutpage import AboutPage
 from vitables.h5db import groupnode
 from vitables.h5db import leafnode
@@ -54,8 +55,7 @@ def customiseDBsTreeModel():
     """Slot connected to the convenience dbtree_model_created signal."""
 
     # The absolute path of the INI file
-    ini_filename = \
-        os.path.join(os.path.dirname(__file__), 'sorting_algorithm.ini')
+    ini_filename = resource_path(__file__, 'sorting_algorithm.ini')
     config = ConfigParser.ConfigParser()
     default_sorting = 'default'
     try:

@@ -29,8 +29,6 @@ mode. Otherwise all shown information is read-only.
 
 __docformat__ = 'restructuredtext'
 
-import os.path
-
 import tables
 
 from PyQt4 import QtCore
@@ -39,14 +37,14 @@ from PyQt4 import QtGui
 from PyQt4.uic import loadUiType
 
 import vitables.utils
+from vitables.vtsite import resource_path
 from vitables.nodeprops import attreditor
 
 translate = QtGui.QApplication.translate
 # This method of the PyQt4.uic module allows for dinamically loading user
 # interfaces created by QtDesigner. See the PyQt4 Reference Guide for more
 # info.
-Ui_AttrPropDialog = \
-    loadUiType(os.path.join(os.path.dirname(__file__),'attr_prop_dlg.ui'))[0]
+Ui_AttrPropDialog = loadUiType(resource_path(__file__,'attr_prop_dlg.ui'))[0]
 
 
 

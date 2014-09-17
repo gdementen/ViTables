@@ -55,7 +55,7 @@ import sys
 from PyQt4 import QtGui
 
 import vitables.utils
-from vitables.vtsite import PLUGINSDIR
+from vitables.vtsite import PLUGINSCODEDIR
 from vitables.plugin_utils import getLogger
 
 LOGGER = getLogger()
@@ -89,7 +89,7 @@ def pluginDesc(mod_path, folder=None):
         comment = getattr(imported_module, 'comment')
         pkg_name = mod_path.split('.')[-2]
         mod_name = mod_path.split('.')[-1]
-        folder = os.path.join(PLUGINSDIR, pkg_name)
+        folder = os.path.join(PLUGINSCODEDIR, pkg_name)
         desc = {'UID': '{0}#@#{1}'.format(plugin_name, comment),
             'mod_name': mod_name,
             'mod_path': mod_path,
@@ -126,18 +126,14 @@ def scanFolder(package_root):
     """
 
     pkg_plugins = {}
-    folder = os.path.join(PLUGINSDIR, package_root)
-    if not os.path.exists(folder):
-        LOGGER.error('Failed to find a plugin in folder {folder}:'
-                     'Folder does not exist'.format(folder))
-    else:
-        for module_finder, name, ispkg in pkgutil.iter_modules([folder]):
-            if not ispkg:
-                module_path = '.'.join(['vitables', 'plugins', package_root,
-                                        name])
-                desc = pluginDesc(module_path)
-                if desc:
-                    pkg_plugins[desc['UID']] = desc
+    # os.path.exists(folder) may not be True (eg for zipped/frozen packages)
+    folder = os.path.join(PLUGINSCODEDIR, package_root)
+    for module_finder, name, ispkg in pkgutil.iter_modules([folder]):
+        if not ispkg:
+            module_path = '.'.join(['vitables.plugins', package_root, name])
+            desc = pluginDesc(module_path)
+            if desc:
+                pkg_plugins[desc['UID']] = desc
     return pkg_plugins
 
 
@@ -173,7 +169,7 @@ class PluginsLoader(object):
 
         # Traverse the plugins folder looking for plugins
         self.all_plugins = {}
-        for loader, name, ispkg in pkgutil.iter_modules([PLUGINSDIR]):
+        for loader, name, ispkg in pkgutil.iter_modules([PLUGINSCODEDIR]):
             if not ispkg:
                 desc = pluginDesc(name)
                 if desc:

@@ -38,10 +38,26 @@ Misc variables:
 
 __docformat__ = 'restructuredtext'
 
+import sys
 import os.path
 
-INSTALLDIR = os.path.dirname(__file__)
-ICONDIR = os.path.join(INSTALLDIR, "icons")
-DOCDIR = os.path.join(INSTALLDIR, "htmldocs")
-PLUGINSDIR = os.path.join(INSTALLDIR, "plugins")
+PACKAGEDIR = os.path.dirname(__file__)
+FROZEN = getattr(sys, 'frozen', False)
+if FROZEN:
+    DATADIR = os.path.join(os.path.dirname(sys.executable), 'vitables')
+else:
+    DATADIR = PACKAGEDIR
+ICONDIR = os.path.join(DATADIR, "icons")
+DOCDIR = os.path.join(DATADIR, "htmldocs")
+PLUGINSDIR = os.path.join(DATADIR, "plugins")
+PLUGINSCODEDIR = os.path.join(PACKAGEDIR, "plugins")
 
+
+def resource_path(module_path, fname):
+    """
+    returns an absolute path for the *fname* file, relative to the module at
+    *module_path*.
+    eg. resource_path(__file__, "about.ui")
+    """
+    rel_path = os.path.relpath(os.path.dirname(module_path), PACKAGEDIR)
+    return os.path.join(DATADIR, rel_path, fname)

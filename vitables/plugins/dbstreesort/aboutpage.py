@@ -30,18 +30,20 @@ dialog selector pane.
 
 __docformat__ = 'restructuredtext'
 
-import os.path
 import ConfigParser
 
 from PyQt4 import QtGui
 from PyQt4.uic import loadUiType
 
+from vitables.vtsite import resource_path
+
 # This method of the PyQt4.uic module allows for dynamically loading user
 # interfaces created by QtDesigner. See the PyQt4 Reference Guide for more
 # info.
-Ui_DBsTreeSortPage = \
-    loadUiType(os.path.join(os.path.dirname(__file__),
-                            'dbs_tree_sort_page.ui'))[0]
+Ui_DBsTreeSortPage = loadUiType(resource_path(__file__,
+                                              'dbs_tree_sort_page.ui'))[0]
+
+
 class AboutPage(QtGui.QWidget, Ui_DBsTreeSortPage):
     """
     Widget for describing and customizing the Sorting of DBs Tree plugin.
@@ -81,8 +83,7 @@ class AboutPage(QtGui.QWidget, Ui_DBsTreeSortPage):
         self.desc_te.setText(desc['about_text'])
 
         # The absolute path of the INI file
-        self.ini_filename = \
-            os.path.join(os.path.dirname(__file__), 'sorting_algorithm.ini')
+        self.ini_filename = resource_path(__file__, 'sorting_algorithm.ini')
 
         # Read initial configuration from the INI file
         self.config = ConfigParser.ConfigParser()

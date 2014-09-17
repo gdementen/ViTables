@@ -36,6 +36,7 @@ from PyQt4 import QtGui
 from PyQt4.uic import loadUiType
 
 from vitables.vtsite import ICONDIR
+from vitables.vtsite import resource_path
 import vitables.utils
 
 
@@ -44,8 +45,7 @@ translate = QtGui.QApplication.translate
 # This method of the PyQt4.uic module allows for dinamically loading user
 # interfaces created by QtDesigner. See the PyQt4 Reference Guide for more
 # info.
-Ui_SettingsDialog = \
-    loadUiType(os.path.join(os.path.dirname(__file__),'settings_dlg.ui'))[0]
+Ui_SettingsDialog = loadUiType(resource_path(__file__,'settings_dlg.ui'))[0]
 
 
 class Preferences(QtGui.QDialog, Ui_SettingsDialog):
