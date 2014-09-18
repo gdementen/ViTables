@@ -1,0 +1,47 @@
+Notes taken during my quest to install ViTables in a virtual environment.
+
+* there is no stable release on PyPI, so "pip install vitables" fails:
+  Could not find a version that satisfies the requirement vitables
+  (from versions: 2.2a1)
+
+* the only version that is on PyPI is an alpha release, so it should be
+  installed with "pip install --pre vitables", but this fails with:
+  IOError: [Errno 2] No such file or directory: '[...]\vitables\\VERSION'
+
+* installing 2.0 from source
+    pip install https://vitables.googlecode.com/files/ViTables-2.0.tar.gz
+  or
+    get source and "python setup.py install"
+  fails with latest version of PyQT because of a bad version check (4.4 > 4.10)
+
+* installing using one of Gohlke's binary installers does not work by default
+  (in a virtual environment), but can be done via:
+    easy_install INSTALLER.EXE
+  or
+    pip install wheel
+    wheel convert INSTALLER.EXE
+    pip install INSTALLER.WHL
+
+* installing 2.1 from source
+    pip install https://vitables.googlecode.com/files/ViTables-2.1.tar.gz
+  or
+    git co v2.1
+    python setup.py install
+  works but needs sphinx installed due to a small glitch in the setup.py
+  (otherwise we get a "NameError: name 'BuildDoc' is not defined" exception)
+
+* installing git master as of 18/09/2014
+    pip install git+https://github.com/uvemas/ViTables@master
+  or
+    git clone https://github.com/uvemas/ViTables
+    python setup.py install
+  works with a few glitches:
+  - tree of db sorting plugin does not show up (and causes errors in the log)
+  - activating the columnar_org plugin makes vitables fail to start and we have
+    to delete HKEY_CURRENT_USER\Software\ViTables\2.1\Plugins in the registry to
+    have it work again!
+  this is only a problem of bad setup.py, I think
+
+* installing git develop as of 18/09/2014
+    pip install git+https://github.com/uvemas/ViTables@develop
+  fails. It installs but fails at runtime because all .ui files are missing
