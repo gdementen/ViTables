@@ -17,7 +17,7 @@
 #
 #       Author:  Vicent Mas - vmas@vitables.org
 
-__version__ = '2.1'
+__version__ = '2.1+frozenpatch'
 __all__ = ["docbrowser", "h5db", "logger", "nodeprops", 
     "plugins", "queries", "preferences", "vttables", "vtwidgets",
     "utils", "vtsite", "vtapp", "vtgui", "vtsplash"]
